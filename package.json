@@ -9,6 +9,7 @@
     },
     "author": "",
     "devDependencies": {
-        "quip-apps-webpack-config": ">=0.0.39"
+        "quip-apps-webpack-config": ">=0.0.39",
+        "viz.js": "^2.1.2"
     }
 }
