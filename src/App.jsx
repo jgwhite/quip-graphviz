@@ -2,35 +2,44 @@ import Viz from "viz.js";
 import { Module, render } from "viz.js/full.render.js";
 
 export default class App extends React.Component {
+  state = {
+    focused: false
+  };
+
   render() {
     let dot = this.props.rootRecord.get("dot");
     let width = quip.apps.getContainerWidth();
+    let { focused } = this.state;
 
     return (
       <div
         style={{
           display: "flex",
-          width: `${width}px`
+          width: `${width}px`,
+          boxSizing: "border-box",
+          border: focused ? "1px solid grey" : "1px solid white"
         }}
       >
-        <textarea
-          rows="20"
-          style={{
-            width: "50%",
-            fontFamily: "monospace",
-            border: "1px solid grey",
-            borderRadius: "0",
-            zIndex: 1
-          }}
-          onInput={e => this.updateDot(e.target.value)}
-        >
-          {dot}
-        </textarea>
+        {focused && (
+          <textarea
+            style={{
+              width: "50%",
+              fontFamily: "monospace",
+              border: "0",
+              borderRadius: "0",
+              zIndex: 1
+            }}
+            onInput={e => this.updateDot(e.target.value)}
+            spellCheck={false}
+          >
+            {dot}
+          </textarea>
+        )}
         <div
           style={{
-            width: "50%",
-            border: "1px solid grey",
-            borderLeft: "0",
+            boxSizing: "border-box",
+            width: focused ? "50%" : "100%",
+            borderLeft: focused ? "1px solid grey" : "0",
             zIndex: 0
           }}
           ref={e => (this.graphContainer = e)}
@@ -47,11 +56,22 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this.renderGraph();
+    quip.apps.addEventListener(quip.apps.EventType.FOCUS, this.onFocus);
+    quip.apps.addEventListener(quip.apps.EventType.BLUR, this.onBlur);
   }
 
   componentDidUpdate() {
     this.renderGraph();
   }
+
+  componentWillUnmount() {
+    quip.apps.removeEventListener(quip.apps.EventType.FOCUS, this.onFocus);
+    quip.apps.removeEventListener(quip.apps.EventType.BLUR, this.onBlur);
+  }
+
+  onFocus = () => this.setState({ focused: true });
+
+  onBlur = () => this.setState({ focused: false });
 
   async renderGraph() {
     let viz = new Viz({ Module, render });
