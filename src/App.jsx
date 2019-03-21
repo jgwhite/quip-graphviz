@@ -16,10 +16,20 @@ export default class App extends React.Component {
         style={{
           display: "flex",
           width: `${width}px`,
+          minHeight: focused ? "200px" : "0",
           boxSizing: "border-box",
           border: focused ? "1px solid grey" : "1px solid white"
         }}
       >
+        <div
+          style={{
+            boxSizing: "border-box",
+            width: focused ? "50%" : "100%",
+            borderRight: focused ? "1px solid grey" : "0",
+            zIndex: 0
+          }}
+          ref={e => (this.graphContainer = e)}
+        />
         {focused && (
           <textarea
             style={{
@@ -35,15 +45,6 @@ export default class App extends React.Component {
             {dot}
           </textarea>
         )}
-        <div
-          style={{
-            boxSizing: "border-box",
-            width: focused ? "50%" : "100%",
-            borderLeft: focused ? "1px solid grey" : "0",
-            zIndex: 0
-          }}
-          ref={e => (this.graphContainer = e)}
-        />
       </div>
     );
   }
