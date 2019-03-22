@@ -10,7 +10,7 @@ export class RootRecord extends quip.apps.RootRecord {
 
   static getDefaultProperties() {
     return {
-      dot: "digraph {\n\n}"
+      dot: 'digraph {\n  Alice -> Bob [label="encrypted message"]\n}'
     };
   }
 }
