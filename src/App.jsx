@@ -1,5 +1,6 @@
 import Viz from "viz.js";
 import { Module, render } from "viz.js/full.render.js";
+import MonacoEditor from 'react-monaco-editor';
 
 export default class App extends React.Component {
   state = {
@@ -31,22 +32,23 @@ export default class App extends React.Component {
           ref={e => (this.graphContainer = e)}
         />
         {focused && (
-          <textarea
-            style={{
-              width: "50%",
-              fontFamily: "monospace",
-              border: "0",
-              borderRadius: "0",
-              zIndex: 1
-            }}
-            onInput={e => this.updateDot(e.target.value)}
-            spellCheck={false}
-          >
-            {dot}
-          </textarea>
+          <MonacoEditor
+          width="800"
+          height="600"
+          language="javascript"
+          theme="vs-dark"
+          value={dot}
+          onChange={(value)=> this.updateDot(value) }
+          editorDidMount={(editor) => this.editorDidMount(editor) }
+        />
         )}
       </div>
     );
+  }
+
+  editorDidMount(editor, monaco) {
+    console.log('editorDidMount', editor);
+    editor.focus();
   }
 
   updateDot(value) {
@@ -80,6 +82,8 @@ export default class App extends React.Component {
     let svg = await viz.renderSVGElement(dot);
     let div = this.graphContainer;
     let old = div.firstChild;
+
+    svg.style.width = "100%";
 
     if (old) {
       div.replaceChild(svg, old);

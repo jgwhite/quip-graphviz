@@ -10,6 +10,7 @@
     "author": "",
     "devDependencies": {
         "quip-apps-webpack-config": ">=0.0.39",
+        "react-monaco-editor": "^0.25.1",
         "viz.js": "^2.1.2"
     }
 }
