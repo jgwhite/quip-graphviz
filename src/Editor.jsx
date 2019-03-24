@@ -1,4 +1,8 @@
 import MonacoEditor from "react-monaco-editor";
+import Dot from "./dot.js";
+
+monaco.languages.register({ id: "dot" });
+monaco.languages.setMonarchTokensProvider("dot", Dot);
 
 export default class Editor extends React.Component {
   render() {
