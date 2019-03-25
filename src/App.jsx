@@ -3,19 +3,20 @@ import Editor from "./Editor.jsx";
 
 export default class App extends React.Component {
   state = {
-    isFocused: false
+    isFocused: false,
+    isEditing: false
   };
 
   render() {
     let dot = this.props.rootRecord.get("dot");
     let width = quip.apps.getContainerWidth();
-    let { isFocused } = this.state;
     let gray = "#e3e5e8";
+    let { isEditing } = this.state;
 
     return (
       <div
         style={{
-          outline: isFocused ? `2px solid ${gray}` : "none"
+          outline: isEditing ? `2px solid ${gray}` : "none"
         }}
       >
         <Graph
@@ -23,7 +24,7 @@ export default class App extends React.Component {
           style={{ width: `${width}px` }}
           onRender={() => this.graphDidRender()}
         />
-        {isFocused && (
+        {isEditing && (
           <Editor
             dot={dot}
             style={{
@@ -48,6 +49,32 @@ export default class App extends React.Component {
     this.forceUpdate();
   }
 
+  updateMenu() {
+    if (this.state.isEditing) {
+      quip.apps.updateToolbar({
+        toolbarCommandIds: ["edit"],
+        menuCommands: [
+          {
+            id: "edit",
+            label: "Done",
+            handler: () => this.setState({ isEditing: false })
+          }
+        ]
+      });
+    } else {
+      quip.apps.updateToolbar({
+        toolbarCommandIds: ["edit"],
+        menuCommands: [
+          {
+            id: "edit",
+            label: "Edit",
+            handler: () => this.setState({ isEditing: true })
+          }
+        ]
+      });
+    }
+  }
+
   editorDidMount(editor) {
     editor.focus();
     this.editor = editor;
@@ -60,6 +87,11 @@ export default class App extends React.Component {
   componentDidMount() {
     quip.apps.addEventListener(quip.apps.EventType.FOCUS, this.onFocus);
     quip.apps.addEventListener(quip.apps.EventType.BLUR, this.onBlur);
+    this.updateMenu();
+  }
+
+  componentDidUpdate() {
+    this.updateMenu();
   }
 
   componentWillUnmount() {
@@ -68,5 +100,5 @@ export default class App extends React.Component {
   }
 
   onFocus = () => this.setState({ isFocused: true });
-  onBlur = () => this.setState({ isFocused: false });
+  onBlur = () => this.setState({ isFocused: false, isEditing: false });
 }
