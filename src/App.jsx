@@ -99,6 +99,13 @@ export default class App extends React.Component {
     quip.apps.removeEventListener(quip.apps.EventType.BLUR, this.onBlur);
   }
 
-  onFocus = () => this.setState({ isFocused: true });
-  onBlur = () => this.setState({ isFocused: false, isEditing: false });
+  onFocus = () => {
+    this.setState({ isFocused: true });
+    this.updateMenu();
+  }
+
+  onBlur = () => {
+    this.setState({ isFocused: false, isEditing: false });
+    this.updateMenu();
+  }
 }
