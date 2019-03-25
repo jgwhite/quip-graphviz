@@ -87,6 +87,7 @@ export default class App extends React.Component {
   componentDidMount() {
     quip.apps.addEventListener(quip.apps.EventType.FOCUS, this.onFocus);
     quip.apps.addEventListener(quip.apps.EventType.BLUR, this.onBlur);
+    this.props.rootRecord.listen(this.onChange);
     this.updateMenu();
   }
 
@@ -97,6 +98,7 @@ export default class App extends React.Component {
   componentWillUnmount() {
     quip.apps.removeEventListener(quip.apps.EventType.FOCUS, this.onFocus);
     quip.apps.removeEventListener(quip.apps.EventType.BLUR, this.onBlur);
+    this.props.rootRecord.unlisten(this.onChange);
   }
 
   onFocus = () => {
@@ -107,5 +109,9 @@ export default class App extends React.Component {
   onBlur = () => {
     this.setState({ isFocused: false, isEditing: false });
     this.updateMenu();
+  }
+
+  onChange = () => {
+    this.forceUpdate();
   }
 }
