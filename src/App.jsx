@@ -114,6 +114,10 @@ export default class App extends React.Component {
   }
 
   onChange = () => {
+
+    if (this.state.isEditing) {
+      return;
+    }
     this.forceUpdate();
   }
 }
