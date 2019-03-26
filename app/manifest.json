@@ -2,7 +2,7 @@
     "id": "LKUAjAFPOm5",
     "manifest_version": 1,
     "name": "Graphviz",
-    "version_name": "0.4.0",
+    "version_name": "0.4.1",
     "version_number": 1,
     "sizing_mode": "fit_content",
     "initial_height": 300,
