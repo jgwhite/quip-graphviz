@@ -46,7 +46,6 @@ export default class App extends React.Component {
   updateDot(value) {
     let { rootRecord } = this.props;
     rootRecord.set("dot", value);
-    this.forceUpdate();
   }
 
   updateMenu() {
