@@ -35,6 +35,12 @@ export default class Graph extends React.Component {
     this.removeGraph();
     this.element.appendChild(graph);
     this.graph = graph;
+
+    let { onRender } = this.props;
+
+    if (onRender) {
+      onRender(this.graph);
+    }
   }
 
   removeGraph() {
