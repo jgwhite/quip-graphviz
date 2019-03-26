@@ -81,7 +81,9 @@ export default class App extends React.Component {
   }
 
   graphDidRender() {
-    this.editor.layout();
+    if (this.editor) {
+      this.editor.layout();
+    }
   }
 
   componentDidMount() {
