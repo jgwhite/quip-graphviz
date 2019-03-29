@@ -16,7 +16,8 @@ export default class App extends React.Component {
     return (
       <div
         style={{
-          outline: isEditing ? `2px solid ${gray}` : "none"
+          outline: isEditing ? `2px solid ${gray}` : "none",
+          minHeight: isEditing ? "128px" : "0"
         }}
       >
         <Graph
