@@ -5,4 +5,4 @@ the instructions in [the Quip Live Apps API Guide].
 
 ![Screenshot](screenshot.png)
 
-[the Quip Live Apps API Guide]: https://salesforce.quip.com/dev/liveapps/
+[the Quip Live Apps API Guide]: https://quip.com/dev/liveapps/
